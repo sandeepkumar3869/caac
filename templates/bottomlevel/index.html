@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+
+{% load static %}
+{% block element %}
+
+<img src="{% static 'image/download.png' %}" height="100px" width="150px" alt="img">
+
+<div>
+    <form action="/logout_view" method="POST">
+        {% csrf_token %}
+        <button type="submit" > <p>LOGOUT</p> </button>
+    </form>
+</div>
+<div class="container at-5">
+    <div class="text-center mt-5">
+        <h1>My to-do list application</h1>
+
+    </div>
+    <!-- <img src="{% static 'image/images (1).jpeg' %}" height="200px" width="200px" alt="img"> -->
+    <div class="row m-auto mt-3">
+        <div class="col-5">
+            <p class="text-center" style="background-color: brown;">Part 1</p>
+
+
+            <div class="text-center p-2 fw-bolder" style="background-color: aqua;">
+                Pending task
+                <hr />
+
+            </div>
+            {% for i in task %}
+            <div class="p-2 bg-light m-1 " style="background-color: rgb(1, 1, 26); color: black;">
+                <h4>
+                    <center>{{ i.task_title}}</center>
+                </h4>
+
+                <br>
+                <small>
+                    created at {{ i.task_created_on }}
+                </small>
+                {{ i.task_description}}
+
+                <a href="{% url 'delete-task' i.taskid %}">
+                    <i class="fa-solid fa-delete-left float-end m1"></i>
+                </a>
+                <a href="{% url 'edit-task' i.taskid %}">
+                    <i class="fa-solid fa-pen-to-square float-end m1"></i>
+                </a>
+
+                
+
+            </div>
+
+            {% endfor %}
+
+
+        </div>
+        <div class="col-5 text-center">
+            <p style="background-color: rgb(134, 126, 126); ">Part 2</p>
+            <div class="text-center p-2 fw-bolder">
+                ADD NEW TASK
+
+            </div>
+            <div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <label for="task"></label>
+
+
+                        <input type="text" class="form-control" id="task" name="task" placeholder="add new task">
+
+                    </div>
+                    <div>
+
+
+                        <textarea name="description" id="description" cols="30" rows="10"
+                            placeholder="add description here"></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button class="btn btn-sm btn-warning" type="submit">save </button>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+{% endblock element %}
